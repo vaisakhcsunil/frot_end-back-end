@@ -10,7 +10,7 @@
     <meta content="Free HTML Templates" name="description">
 
     <!-- Favicon -->
-    <link href=" {% static 'img/favicon.ico' %}" rel="icon">
+    <link href=" {% static 'favicon.ico' %}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -20,7 +20,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="{% static 'owl.carousel.min.css' %}" rel="stylesheet">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{% static 'style.css' %}" rel="stylesheet">
@@ -96,8 +96,8 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="index.html" class="nav-item nav-link active">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
+                            <a href="{% url 'shop' %}" class="nav-item nav-link">Shop</a>
+                            <a href="{% url 'detail' %}" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
@@ -108,7 +108,7 @@
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0">
-                            <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item nav-link">Login</a>
+                            <!-- <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" class="nav-item nav-link">Login</a> -->
                             <a href="" class="nav-item nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal1">Register</a>
                         </div>
                     </div>
@@ -152,8 +152,8 @@
     </div>
     <!-- Navbar End -->
 
-    <!--login modal start -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- login modal start -->
+    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -172,33 +172,42 @@
           </div>
         </div>
       </div>
-      <!-- modal end -->
+      modal end -->
 
       
-    <!--register modal start -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
+   <!-- Register Modal Start -->
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Register</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Register</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-             
-                <form action="">
-                    <input type="text" placeholder="First_name" class="form-control">
-                    <input type="text" placeholder="last_name" class="form-control mt-3">
-                    <input type="email" placeholder="email" class="form-control mt-3">
-                    <input type="password" placeholder="password" class="form-control mt-3">
+                <!-- Single form element -->
+                <form class="reg-text" method="POST" id="SignupForm">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <!-- You can remove these commented-out input fields if not needed -->
+                    <!-- <input type="text" placeholder="First_name" class="form-control"> -->
+                    <!-- <input type="text" placeholder="last_name" class="form-control mt-3"> -->
+                    <!-- <input type="email" placeholder="email" class="form-control mt-3"> -->
+                    <!-- <input type="password" placeholder="password" class="form-control mt-3"> -->
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Register</button>
+                <!-- Close button to dismiss the modal -->
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+
+                <!-- Register button to submit the form -->
+                <button type="submit" class="btn btn-primary" form="SignupForm">Register</button>
             </div>
-          </div>
         </div>
-      </div>
-      <!-- modal end -->
+    </div>
+</div>
+<!-- Modal End -->
+
 
 
     <!-- Featured Start -->
@@ -678,7 +687,7 @@
                 </p>
             </div>
             <div class="col-md-6 px-xl-0 text-center text-md-right">
-                <img class="img-fluid" src="img/payments.png" alt="">
+                <img class="img-fluid" src="{% static 'payments.png' %}" alt="">
             </div>
         </div>
     </div>
@@ -692,15 +701,15 @@
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="{ % static 'lib/easing/easing.min.js' %}"></script>
-    <script src="{%  static 'lib/owlcarousel/owl.carousel.min.js'%} "></script>
+    <script src="{% static 'easing.min.js' %}"></script>
+    <script src="{%  static 'owl.carousel.min.js' %} "></script>
 
     <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+    <script src="{% static 'jqBootstrapValidation.min.js' %}"></script>
+    <script src="{% static 'contact.js' %}"></script>
 
     <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+    <script src="{% static 'main.js' %}"></script>
 </body>
 
 </html>
