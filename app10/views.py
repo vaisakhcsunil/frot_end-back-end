@@ -4,13 +4,14 @@ from django.shortcuts import render
 from django.shortcuts import render
 
 # Create your views here.
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from.forms import SignupForm
 from django.contrib.auth.hashers import make_password
-from . forms import SignupForm,LoginForm
+from . forms import SignupForm,LoginForm,ProductForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
+from .models import Product
 def index(request):
     if request.method=='POST':
         form=SignupForm(request.POST)
@@ -27,8 +28,25 @@ def index(request):
     return render(request,'index.html',{'form':form})
 def shop(request):
     return render(request,'shop.html')
-def detail(request):
-    return render(request,'detail.html')
+# def detail(request):
+#     return render(request,'detail.html')
+
+
+
+def upload_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('product_detail', pk=form.instance.pk)
+    else:
+        form = ProductForm()
+    return render(request, 'upload_product.html', {'form': form})
+
+def product_detail(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    return render(request, 'detail.html', {'product': product})
+
 def cart(request):
     return render(request,'cart.html')
 def checkout(request):
@@ -55,4 +73,4 @@ def login_page(request):
             messages.error(request, 'Invalid form submission. Please check your input.')        
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'shop.html', {'form': form})
